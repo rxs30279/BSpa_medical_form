@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name and Age</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            font-family: 'Rubik', sans-serif;
+
+        }
+
+        h1 {
+            margin-top: 3rem;
+        }
+
+        h2 {
+            margin-bottom: 2rem;
+        }
+
+
+
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            background-color: hsl(124, 46%, 59%);
+            width: 50%;
+            height: 100%;
+
+        }
+
+        img {
+            height: 200px;
+            width: auto;
+        }
+
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 50%;
+        }
+
+        .input-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            height: 70vh;
+            width: 100%;
+        }
+
+        .form-row input {
+            border: 1px solid hsla(0, 0%, 82%, 0.938);
+            height: 2rem;
+            width: 19rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            padding: 5px;
+            font-family: 'Rubik', sans-serif;
+        }
+
+        .checkbox {
+            font-size: 1rem;
+            font-weight: 400;
+            color: hsl(240, 3%, 28%);
+
+        }
+
+        .box {
+            margin-top: -15px;
+            height: 2rem;
+            width: 2rem;
+        }
+
+        input[type='checkbox'] {
+            accent-color: hsl(124, 46%, 59%);
+        }
+
+        button {
+            width: 19rem;
+            height: 3.5rem;
+            border-radius: 15px;
+            background-color: hsl(240, 3%, 28%);
+            color: white;
+            font-size: 1.3rem;
+            font-family: 'Rubik', sans-serif;
+            font-weight: 700;
+        }
+
+        #output {
+            margin-bottom: 5rem;
+            ;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="left-panel">
+        <h1>Survey Form</h1>
+        <h3 id="subs">Number of submissions 0</h3>
+        <img src=".\images\Survey-Icon-300x300.png" alt="">
+        <h3 id="output"></h3>
+
+
+    </div>
+
+    <section class="right-panel">
+        <h2> Medical Information Survey</h2>
+        <!-- A form to collect Name and age -->
+        <form id="submit-form" class="input-form" onsubmit="completeForm(event)" ;>
+            <!-- name -->
+
+            <label class="form-row">
+                <input type="text" id="name" name="fullname" placeholder="name" required>
+            </label>
+
+            <!-- age -->
+
+            <label for="age" class="form-row">
+                <input type="number" id="age" name="age" placeholder="age" required>
+            </label>
+
+            <!-- email -->
+
+            <label class="form-row">
+                <input type="email" id="email" name="email" placeholder="email" required>
+            </label>
+
+            <!-- consent -->
+
+            <label class="checkbox"> Consent </label>
+            <input class="box" type="checkbox" id="consent" name="consent" placeholder="consent">
+
+            <button type="submit">Submit</button>
+        </form>
+
+    </section>
+    <script>
+        // empty declared array
+        const people = [];
+
+        // Function activated onclick event
+        function completeForm(event) {
+
+            event.preventDefault(); // Commented out to restore 'required field' behaviour of form.
+
+            // Get form input values
+            const fname = document.getElementById("name").value;
+            const personage = document.getElementById("age").value;
+            const personemail = document.getElementById("email").value;
+            const personconsent = document.getElementById("consent").value;
+
+            // Create person object
+            const person = {
+                first_name: fname,
+                age: personage,
+                email: personemail,
+                consent: personconsent
+            }
+
+            // Add person object to the people array    
+            people.push(person);
+
+
+            // Calculate the sum of ages using reduce()
+            const sum = people.reduce((total, current) => total + parseInt(current.age, 10), 0);
+            // Calculate the average age
+            const average = sum / people.length;
+
+
+            // Update submission count display 
+            document.getElementById("subs").innerHTML = "Responder Submissions " + people.length;
+            // Update average age display if there is more than one submission
+            if (people.length > 1) {
+                document.getElementById("output").innerHTML = "Average Age of Responder " + average.toFixed(2);
+            }
+
+            // Reset the form
+            document.getElementById("submit-form").reset();
+        }
+
+    </script>
+</body>
+
+</html>
