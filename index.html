@@ -178,8 +178,13 @@
             people.push(person);
 
 
-            // Calculate the sum of ages using reduce()
-            const sum = people.reduce((total, current) => total + parseInt(current.age, 10), 0);
+            // Calculate the sum of ages using reduce(), reduce() takes two arguments and can be written with arrow function
+            //const sum = people.reduce((total, current) => total + parseInt(current.age, 10), 0);
+            const sum = people.reduce(function (total, current) { return total + parseInt(current.age, 10) }, 0);
+            // more examples of reduce()
+            // let product = a.reduce(function (x, y) { return x * y }, 1); // Product of values
+            // let max = a.reduce(function (x, y) { (x > y) ? x : y; }); // Largest value
+            // conditional or terniary expression (x > y) ? x : y;   if x is greater than y (? ternary operator) then x else y.
             // Calculate the average age
             const average = sum / people.length;
 
