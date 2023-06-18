@@ -28,8 +28,6 @@
             margin-bottom: 2rem;
         }
 
-
-
         .left-panel {
             display: flex;
             flex-direction: column;
@@ -38,7 +36,6 @@
             background-color: hsl(124, 46%, 59%);
             width: 50%;
             height: 100%;
-
         }
 
         img {
@@ -78,7 +75,6 @@
             font-size: 1rem;
             font-weight: 400;
             color: hsl(240, 3%, 28%);
-
         }
 
         .box {
@@ -104,7 +100,11 @@
 
         #output {
             margin-bottom: 5rem;
-            ;
+
+        }
+
+        .bmi {
+            margin-bottom: 3rem;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
@@ -115,7 +115,8 @@
         <h1>Survey Form</h1>
         <h3 id="subs">Number of submissions 0</h3>
         <img src=".\images\Survey-Icon-300x300.png" alt="">
-        <h3 id="output"></h3>
+        <h3 id="age_output"></h3>
+        <h3 class="bmi" id="bmi_output"></h3>
 
 
     </div>
@@ -136,6 +137,18 @@
                 <input type="number" id="age" name="age" placeholder="age" required>
             </label>
 
+            <!-- height -->
+
+            <label class="form-row">
+                <input type="height" id="height" name="height" placeholder="height m" required>
+            </label>
+
+            <!-- weight -->
+
+            <label class="form-row">
+                <input type="weight" id="weight" name="weight" placeholder="weight kg" required>
+            </label>
+
             <!-- email -->
 
             <label class="form-row">
@@ -151,6 +164,7 @@
         </form>
 
     </section>
+
     <script>
         // empty declared array
         const people = [];
@@ -163,15 +177,22 @@
             // Get form input values
             const fname = document.getElementById("name").value;
             const personage = document.getElementById("age").value;
+            const personheight = document.getElementById("height").value;
+            const personweight = document.getElementById("weight").value;
             const personemail = document.getElementById("email").value;
             const personconsent = document.getElementById("consent").value;
+            const bmi = personweight / (personheight * personheight);
 
-            // Create person object
+            // Create person object using object literal. (key:value pairs)
+            // All keys in objects are strings, must use if contains space e.g.'first name'
             const person = {
                 first_name: fname,
                 age: personage,
+                height: personheight,
+                weight: personweight,
                 email: personemail,
-                consent: personconsent
+                consent: personconsent,
+                bmi: bmi
             }
 
             // Add person object to the people array    
@@ -180,20 +201,22 @@
 
             // Calculate the sum of ages using reduce(), reduce() takes two arguments and can be written with arrow function
             //const sum = people.reduce((total, current) => total + parseInt(current.age, 10), 0);
-            const sum = people.reduce(function (total, current) { return total + parseInt(current.age, 10) }, 0);
-            // more examples of reduce()
-            // let product = a.reduce(function (x, y) { return x * y }, 1); // Product of values
-            // let max = a.reduce(function (x, y) { (x > y) ? x : y; }); // Largest value
-            // conditional or terniary expression (x > y) ? x : y;   if x is greater than y (? ternary operator) then x else y.
+            const age_sum = people.reduce(function (total, current) { return total + parseInt(current.age, 10) }, 0);
+
             // Calculate the average age
-            const average = sum / people.length;
+            const av_age = age_sum / people.length;
+
+            // BMI
+            const bmi_sum = people.reduce((total, current) => total + parseInt(current.bmi, 10), 0);
+            const av_bmi = bmi_sum / people.length;
 
 
             // Update submission count display 
             document.getElementById("subs").innerHTML = "Responder Submissions " + people.length;
             // Update average age display if there is more than one submission
             if (people.length > 1) {
-                document.getElementById("output").innerHTML = "Average Age of Responder " + average.toFixed(2);
+                document.getElementById("age_output").innerHTML = "Average Age of Responder " + av_age.toFixed(2) + " yrs";
+                document.getElementById("bmi_output").innerHTML = "     BMI of Responder " + av_bmi.toFixed(2);
             }
 
             // Reset the form
