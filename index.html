@@ -117,8 +117,6 @@
         <img src=".\images\Survey-Icon-300x300.png" alt="">
         <h3 id="age_output"></h3>
         <h3 class="bmi" id="bmi_output"></h3>
-
-
     </div>
 
     <section class="right-panel">
@@ -140,13 +138,13 @@
             <!-- height -->
 
             <label class="form-row">
-                <input type="height" id="height" name="height" placeholder="height m" required>
+                <input type="number" id="height" name="height" placeholder="height m" required>
             </label>
 
             <!-- weight -->
 
             <label class="form-row">
-                <input type="weight" id="weight" name="weight" placeholder="weight kg" required>
+                <input type="number" id="weight" name="weight" placeholder="weight kg" required>
             </label>
 
             <!-- email -->
@@ -216,7 +214,7 @@
             // Update average age display if there is more than one submission
             if (people.length > 1) {
                 document.getElementById("age_output").innerHTML = "Average Age of Responder " + av_age.toFixed(2) + " yrs";
-                document.getElementById("bmi_output").innerHTML = "     BMI of Responder " + av_bmi.toFixed(2);
+                document.getElementById("bmi_output").innerHTML = "BMI of Responder " + av_bmi.toFixed(2);
             }
 
             // Reset the form
